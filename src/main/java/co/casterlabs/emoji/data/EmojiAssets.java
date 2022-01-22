@@ -11,6 +11,7 @@ import co.casterlabs.emoji.data.Emoji.Variation;
 import co.casterlabs.emoji.data.EmojiAssets.AssetImageProvider.AssetImageSet;
 import co.casterlabs.emoji.data.impl.assets.NotoEmojiProvider;
 import co.casterlabs.emoji.data.impl.assets.OpenMojiProvider;
+import co.casterlabs.emoji.data.impl.assets.SensaEmojiProvider;
 import co.casterlabs.emoji.data.impl.assets.TwemojiProvider;
 import co.casterlabs.rakurai.json.annotating.JsonClass;
 import lombok.AccessLevel;
@@ -25,16 +26,15 @@ import lombok.ToString;
 public class EmojiAssets {
 
     /* 
-     * TODO Host & Add https://sensa.co/emoji/
-     * TODO Host & Add https://openmoji.org/
      * TODO Investigate https://decodeunicode.org/en/u+23F2
      * TODO Render & Host & Add SegoeUI Emoji https://docs.microsoft.com/en-us/typography/font-list/segoe-ui-emoji
      */
     public static final List<AssetImageProvider> emojiProviders = Arrays.asList(
         new NotoEmojiProvider(),
         new TwemojiProvider(),
-        new OpenMojiProvider()
-    ); // This list is immutable.
+        new OpenMojiProvider(),
+        new SensaEmojiProvider()
+    );
 
     // --
 
