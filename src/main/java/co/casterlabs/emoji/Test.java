@@ -15,7 +15,7 @@ public class Test {
         FastLogger.logStatic("Category '%s' has %d emojis.", category.getName(), category.getAllEmojiVariations().size());
         FastLogger.logStatic("There are %d emojis.", index.getAllEmojiVariations().size());
 
-        FastLogger.logStatic(index.getEmoji("vulcan salute").getVariations().get(3).getAssets());
+        FastLogger.logStatic(index.getEmoji("vulcan salute").getVariations().get(3));
 
 ////        Thread.sleep(100000);
     }

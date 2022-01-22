@@ -33,6 +33,7 @@ public class EmojiAssets {
     public static final List<AssetImageProvider> emojiProviders = Arrays.asList(
         new NotoEmojiProvider(),
         new TwemojiProvider(),
+        new OpenMojiProvider()
     );
 
     private Map<String, AssetImageSet> assets = new HashMap<>();
