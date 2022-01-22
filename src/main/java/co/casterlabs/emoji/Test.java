@@ -16,13 +16,9 @@ public class Test {
         FastLogger.logStatic("Category '%s' has %d emojis.", category.getName(), category.getAllEmojiVariations().size());
         FastLogger.logStatic("There are %d emojis.", index.getAllEmojiVariations().size());
 
-        FastLogger.logStatic(
+        System.out.println(
             Rson.DEFAULT.toJson(
-                index
-                    .getEmoji("vulcan salute")
-                    .getVariations()
-                    .get(3)
-                    .getAssets()
+                index.getEmoji("vulcan salute")
             ).toString(true)
         );
 
