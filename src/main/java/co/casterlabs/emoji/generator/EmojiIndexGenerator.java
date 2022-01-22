@@ -112,7 +112,7 @@ public class EmojiIndexGenerator {
                         String variationName = split_space[2].trim();
                         String[] codeSequence = split_semicolon[0].trim().toLowerCase().split(" ");
 
-                        Emoji.Variation variation = new Emoji.Variation(identifier, variationName, variationId, qualification, since, codeSequence, sequence);
+                        Emoji.Variation variation = new Emoji.Variation(identifier, variationName, variationId, since, codeSequence, sequence);
 
                         List<Emoji.Variation> variations = currentGroupEmojiVariations.get(identifier);
 

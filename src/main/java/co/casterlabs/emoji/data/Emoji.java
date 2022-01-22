@@ -116,7 +116,6 @@ public class Emoji {
         private String identifier;
         private String name;
         private String type;
-        private Qualification qualification;
         private String since;
 
         private String[] codeSequence;
@@ -128,11 +127,10 @@ public class Emoji {
         @Deprecated
         public Variation() {} // For Rson.
 
-        public Variation(String identifier, String name, String type, Qualification qualification, String since, String[] codeSequence, String sequence) {
+        public Variation(String identifier, String name, String type, String since, String[] codeSequence, String sequence) {
             this.identifier = identifier;
             this.name = name;
             this.type = type;
-            this.qualification = qualification;
             this.since = since;
             this.sequence = sequence;
             this.codeSequence = codeSequence;
