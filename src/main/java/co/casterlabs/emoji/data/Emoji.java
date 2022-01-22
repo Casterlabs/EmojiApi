@@ -33,6 +33,7 @@ public class Emoji {
 
     private String name;
     private String identifier;
+    private String shortcode;
 
     private @ToString.Exclude List<Variation> variations;
 
@@ -47,16 +48,23 @@ public class Emoji {
     protected void $validate() {
         Collections.reverse(this.variations); // Move the default to the bottom.
 
+        this.shortcode = String.format(
+            ":%s:",
+            this.name
+                .replace(' ', '_')
+                .toLowerCase()
+        );
+
         StringBuilder regexBuilder = new StringBuilder();
+
+        regexBuilder.append('(').append(this.shortcode).append(')');
 
         for (Variation variation : this.variations) {
             this.variationsMap.put(variation.type, variation);
             regexBuilder.append('|').append(variation.regex);
         }
 
-        this.regex = regexBuilder
-            .deleteCharAt(0) // Remove additional '|'
-            .toString();
+        this.regex = regexBuilder.toString();
 
         Collections.reverse(this.variations); // Restore the order.
 
@@ -79,6 +87,7 @@ public class Emoji {
         String subcategoryId,
         /* name */
         String identifier,
+        /* shortcode */
         List<Variation> variations
     ) {
 
@@ -102,6 +111,7 @@ public class Emoji {
             subcategoryId,
             name_sb.toString(),
             identifier,
+            null,
             variations,
             null,
             new HashMap<>()
