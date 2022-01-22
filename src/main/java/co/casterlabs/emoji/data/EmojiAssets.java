@@ -21,13 +21,13 @@ public class EmojiAssets {
     public EmojiAssets(Variation variation) {
 
         this.notoEmoji = new AssetImages(
-            "https://twemoji.twitter.com",
+            "https://github.com/googlefonts/noto-emoji",
             String.format("https://raw.githubusercontent.com/googlefonts/noto-emoji/main/png/72/emoji_u%s.png", String.join("_", variation.getCodeSequence())),
             String.format("https://raw.githubusercontent.com/googlefonts/noto-emoji/main/svg/emoji_u%s.svg", String.join("_", variation.getCodeSequence()))
         );
 
         this.twemoji = new AssetImages(
-            "https://github.com/googlefonts/noto-emoji",
+            "https://twemoji.twitter.com",
             String.format("https://raw.githubusercontent.com/twitter/twemoji/master/assets/72x72/%s.png", String.join("-", variation.getCodeSequence())),
             String.format("https://raw.githubusercontent.com/twitter/twemoji/master/assets/svg/%s.svg", String.join("-", variation.getCodeSequence()))
         );
