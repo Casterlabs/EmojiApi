@@ -106,7 +106,7 @@ public class EmojiIndexGenerator {
 
                     if (qualification == Emoji.Qualification.FULLY_QUALIFIED) {
                         String sequence = split_space[0];
-                        String since = split_space[1];
+                        double since = Double.parseDouble(split_space[1].substring(1)); // "E14.0" -> "14.0"
                         String identifier = split_identifier[0].trim();
                         String variationId = (split_identifier.length > 1) ? split_identifier[1].trim() : "default";
                         String variationName = split_space[2].trim();

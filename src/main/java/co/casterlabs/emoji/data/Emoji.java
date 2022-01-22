@@ -10,6 +10,7 @@ import java.util.regex.Pattern;
 import co.casterlabs.rakurai.json.Rson;
 import co.casterlabs.rakurai.json.annotating.JsonClass;
 import co.casterlabs.rakurai.json.annotating.JsonExclude;
+import co.casterlabs.rakurai.json.validation.JsonValidate;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -126,7 +127,7 @@ public class Emoji {
         private String identifier;
         private String name;
         private String type;
-        private String since;
+        private double since;
 
         private String[] codeSequence;
         private String sequence;
@@ -137,7 +138,7 @@ public class Emoji {
         @Deprecated
         public Variation() {} // For Rson.
 
-        public Variation(String identifier, String name, String type, String since, String[] codeSequence, String sequence) {
+        public Variation(String identifier, String name, String type, double since, String[] codeSequence, String sequence) {
             this.identifier = identifier;
             this.name = name;
             this.type = type;
@@ -145,6 +146,11 @@ public class Emoji {
             this.sequence = sequence;
             this.codeSequence = codeSequence;
             this.regex = '(' + SPECIAL_REGEX_CHARS.matcher(this.sequence).replaceAll("\\\\$0") + ')';
+            this.$validate();
+        }
+
+        @JsonValidate
+        private void $validate() {
             this.assets = new EmojiAssets(this);
         }
 
