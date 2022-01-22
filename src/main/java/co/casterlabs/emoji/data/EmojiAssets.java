@@ -16,11 +16,11 @@ import co.casterlabs.rakurai.json.annotating.JsonClass;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NonNull;
 import lombok.ToString;
 
 // This class is manually created in Emoji.Variation, Rson never deserializes it.
 
-@Getter
 @JsonClass(serializer = _EmojiAssetsSerializer.class)
 public class EmojiAssets {
 
@@ -34,14 +34,21 @@ public class EmojiAssets {
         new NotoEmojiProvider(),
         new TwemojiProvider(),
         new OpenMojiProvider()
-    );
+    ); // This list is immutable.
 
+    // --
+
+    @Getter(AccessLevel.PROTECTED)
     private Map<String, AssetImageSet> assets = new HashMap<>();
 
     public EmojiAssets(Variation variation) {
         for (AssetImageProvider provider : emojiProviders) {
             this.assets.put(provider.getProviderId(), provider.produce(variation));
         }
+    }
+
+    public @Nullable AssetImageSet getAsset(@NonNull String provider) {
+        return this.assets.get(provider);
     }
 
     @Override
