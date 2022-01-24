@@ -17,6 +17,7 @@ import co.casterlabs.rakurai.json.annotating.JsonExclude;
 import co.casterlabs.rakurai.json.annotating.JsonField;
 import co.casterlabs.rakurai.json.validation.JsonValidate;
 import kotlin.Pair;
+import kotlin.Triple;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.ToString;
@@ -104,16 +105,17 @@ public class EmojiIndex {
         return this.subcategoriesMap.get(subcategory);
     }
 
-    public Set<Pair<Emoji, Emoji.Variation>> matchAllEmojis(@NonNull String input) {
-        Set<Pair<Emoji, Emoji.Variation>> emojis = new HashSet<>();
+    public Set<Triple<String, Emoji, Emoji.Variation>> matchAllEmojis(@NonNull String input) {
+        Set<Triple<String, Emoji, Emoji.Variation>> emojis = new HashSet<>();
 
         Matcher m = Pattern.compile(this.regex, Pattern.UNICODE_CHARACTER_CLASS).matcher(input);
         while (m.find()) {
             String match = m.group();
 
             Pair<Emoji, Emoji.Variation> pair = this.getEmojiFromSequence(match);
+            Triple<String, Emoji, Emoji.Variation> result = new Triple<>(match, pair.getFirst(), pair.getSecond());
 
-            emojis.add(pair);
+            emojis.add(result);
         }
 
         return emojis;
