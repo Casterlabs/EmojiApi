@@ -28,6 +28,16 @@ public class WebUtil {
     }
 
     @SneakyThrows
+    public static String encodeURI(@NonNull String s) {
+        return URLEncoder.encode(s, "UTF-8");
+    }
+
+    @SneakyThrows
+    public static String decodeURI(@NonNull String s) {
+        return URLDecoder.decode(s, "UTF-8");
+    }
+
+    @SneakyThrows
     public static String decodeURIComponent(@NonNull String s) {
         return URLDecoder.decode(s, "UTF-8");
     }
