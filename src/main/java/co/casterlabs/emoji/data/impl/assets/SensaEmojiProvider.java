@@ -1,5 +1,6 @@
 package co.casterlabs.emoji.data.impl.assets;
 
+import co.casterlabs.emoji.WebUtil;
 import co.casterlabs.emoji.data.Emoji.Variation;
 import co.casterlabs.emoji.data.EmojiAssets;
 
@@ -18,7 +19,9 @@ public class SensaEmojiProvider extends EmojiAssets.AssetImageProvider {
     protected AssetImageSet produce0(Variation variation) {
         String sensaFormat = variation.getIdentifier();
 
-        sensaFormat = sensaFormat.substring(0, 1) + sensaFormat.substring(1); // Capitialize the first letter.
+        sensaFormat = sensaFormat.substring(0, 1).toUpperCase() + sensaFormat.substring(1); // Capitialize the first letter.
+
+        sensaFormat = WebUtil.encodeURI(sensaFormat);
 
         // TODO parse skin colors
         // Format is as follows: "Vulcan salute skin 1.svg" (1-5)
@@ -26,7 +29,7 @@ public class SensaEmojiProvider extends EmojiAssets.AssetImageProvider {
         return new AssetImageSet(
             this,
             String.format("https://cdn.casterlabs.co/emoji-cdn/sensa/png/2x/%s.png", sensaFormat),
-            String.format("https://cdn.casterlabs.co/emoji-cdn/sensa/svg/%s.png", sensaFormat)
+            String.format("https://cdn.casterlabs.co/emoji-cdn/sensa/svg/%s.svg", sensaFormat)
         );
     }
 
