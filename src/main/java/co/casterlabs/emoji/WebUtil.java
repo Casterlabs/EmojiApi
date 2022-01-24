@@ -29,7 +29,8 @@ public class WebUtil {
 
     @SneakyThrows
     public static String encodeURI(@NonNull String s) {
-        return URLEncoder.encode(s, "UTF-8");
+        return URLEncoder.encode(s, "UTF-8")
+            .replaceAll("\\+", "%20");
     }
 
     @SneakyThrows
