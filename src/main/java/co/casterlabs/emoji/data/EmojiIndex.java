@@ -190,7 +190,7 @@ public class EmojiIndex {
                     htmlBuilder.append(
                         String.format(
                             "<img title='%s' alt='%s' src='%s' data-type='emoji' style='height: 1em; width: auto; display: inline-block; vertical-align: middle;' />",
-                            WebUtil.escapeHtml(variation.getIdentifier()), // "vulcan salute"
+                            WebUtil.escapeHtml(variation.getName()), // "vulcan salute: light skin tone"
                             WebUtil.escapeHtml(variation.getSequence()),   // the actual emoji.
                             imageSet.getSvgUrl()
                         )
@@ -198,8 +198,8 @@ public class EmojiIndex {
                 } else {
                     htmlBuilder.append(
                         String.format(
-                            "<span title='%s' alt='%s' data-type='unsupported_emoji'>%s</span>",
-                            WebUtil.escapeHtml(variation.getIdentifier()), // "vulcan salute"
+                            "<span title='%s' alt='%s' data-type='unsupported_emoji'>:%s:</span>",
+                            WebUtil.escapeHtml(variation.getName()), // "vulcan salute: dark skin tone"
                             WebUtil.escapeHtml(variation.getSequence()),   // the actual emoji.
                             WebUtil.escapeHtml(variation.getIdentifier())
                         )
