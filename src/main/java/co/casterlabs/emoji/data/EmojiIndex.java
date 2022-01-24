@@ -122,9 +122,40 @@ public class EmojiIndex {
     }
 
     public Object[] matchAllEmojisAndReturnNodes(@NonNull String input) {
-        String regex = String.format("((?<=%s)|(?=%s))", this.regex, this.regex); // We use a lookahead and lookbehind.
+        String[] split;
 
-        String[] split = input.split(regex); // "start :vulcan_salute: end" -> ["start ", ":vulcan_salute:", " end"]
+        // This is our own split algorithm. Why? Because normal regex lookahead and
+        // lookbehinds won't work properly.
+        {
+            List<String> splitList = new LinkedList<>();
+
+            int lastStop = 0;
+
+            Matcher m = Pattern.compile(this.regex, Pattern.UNICODE_CHARACTER_CLASS).matcher(input);
+            while (m.find()) {
+                int start = m.start();
+                int end = m.end();
+
+                if (start - lastStop > 0) { // There's text before this.
+                    String text = input.substring(lastStop, start);
+                    splitList.add(text);
+                }
+
+                lastStop = end;
+
+                String detection = input.substring(start, end);
+                splitList.add(detection);
+            }
+
+            // Make sure to get the bit we left off.
+            if (lastStop < input.length()) {
+                String end = input.substring(lastStop);
+                splitList.add(end);
+            }
+
+            split = splitList.toArray(new String[0]);
+        }
+
         Object[] result = new Object[split.length]; // We're going to be adding another type into here, so that's why it's Object[].
 
         for (int idx = 0; idx < result.length; idx++) {
