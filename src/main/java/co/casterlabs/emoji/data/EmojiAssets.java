@@ -24,6 +24,7 @@ import lombok.ToString;
 
 @JsonClass(serializer = _EmojiAssetsSerializer.class)
 public class EmojiAssets {
+    public static final String DEFAULT_PROVIDER = "noto-emoji"; // They support the most.
 
     /* 
      * TODO Investigate https://decodeunicode.org/en/u+23F2

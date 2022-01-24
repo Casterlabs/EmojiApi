@@ -12,6 +12,7 @@ import java.util.regex.Pattern;
 
 import org.jetbrains.annotations.Nullable;
 
+import co.casterlabs.emoji.WebUtil;
 import co.casterlabs.rakurai.json.Rson;
 import co.casterlabs.rakurai.json.annotating.JsonExclude;
 import co.casterlabs.rakurai.json.annotating.JsonField;
@@ -63,7 +64,7 @@ public class EmojiIndex {
                 this.emojisMap.put(emoji.getIdentifier(), emoji);
                 this.allEmojiVariations.addAll(emoji.getVariations());
 
-                this.variationsMap.put(emoji.getShortcode(), new Pair(emoji, emoji.getVariations().get(0)));
+                this.variationsMap.put(emoji.getShortcode(), new Pair<>(emoji, emoji.getVariations().get(0)));
 
                 for (Emoji.Variation variation : emoji.getVariations()) {
                     this.variationsMap.put(variation.getSequence(), new Pair<>(emoji, variation));
@@ -140,6 +141,43 @@ public class EmojiIndex {
         }
 
         return result;
+    }
+
+    public String matchAllEmojisAndReturnHtml(@NonNull String input, @NonNull String emojiProvider) {
+        Object[] nodes = this.matchAllEmojisAndReturnNodes(input);
+        StringBuilder htmlBuilder = new StringBuilder();
+
+        for (Object node : nodes) {
+            if (node instanceof String) {
+                htmlBuilder.append(String.format("<span data-type='text'>%s</span>", WebUtil.escapeHtml((String) node)));
+            } else {
+                Emoji.Variation variation = (Emoji.Variation) node;
+
+                EmojiAssets.AssetImageProvider.AssetImageSet imageSet = variation.getAssets().getAsset(emojiProvider);
+
+                if (imageSet.isSupported()) {
+                    htmlBuilder.append(
+                        String.format(
+                            "<img title='%s' alt='%s' src='%s' data-type='emoji' style='height: 1em; width: auto; display: inline-block; vertical-align: middle;' />",
+                            WebUtil.escapeHtml(variation.getIdentifier()), // "vulcan salute"
+                            WebUtil.escapeHtml(variation.getSequence()),   // the actual emoji.
+                            imageSet.getSvgUrl()
+                        )
+                    );
+                } else {
+                    htmlBuilder.append(
+                        String.format(
+                            "<span title='%s' alt='%s' data-type='unsupported_emoji'>%s</span>",
+                            WebUtil.escapeHtml(variation.getIdentifier()), // "vulcan salute"
+                            WebUtil.escapeHtml(variation.getSequence()),   // the actual emoji.
+                            WebUtil.escapeHtml(variation.getIdentifier())
+                        )
+                    );
+                }
+            }
+        }
+
+        return htmlBuilder.toString();
     }
 
     @Override

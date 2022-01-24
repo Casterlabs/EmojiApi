@@ -3,6 +3,7 @@ package co.casterlabs.emoji.api.routes;
 import java.util.Set;
 
 import co.casterlabs.emoji.data.Emoji;
+import co.casterlabs.emoji.data.EmojiAssets;
 import co.casterlabs.emoji.data.EmojiIndex;
 import co.casterlabs.rakurai.io.http.HttpMethod;
 import co.casterlabs.rakurai.io.http.HttpResponse;
@@ -29,18 +30,35 @@ public class EmojiDetectionRoute implements HttpProvider {
         try {
             DetectionRequest body = Rson.DEFAULT.fromJson(session.getRequestBody(), DetectionRequest.class);
 
-            Set<Pair<Emoji, Emoji.Variation>> detected = this.index.matchAllEmojis(body.text);
+            // Too large.
+            if (body.text.length() > 1024) {
+                return HttpResponse.newFixedLengthResponse(StandardHttpStatus.PAYLOAD_TOO_LARGE);
+            }
 
             switch (body.responseFormat) {
-                case DETECTED_ONLY:
+                case DETECTED_ONLY: {
+                    Set<Pair<Emoji, Emoji.Variation>> detected = this.index.matchAllEmojis(body.text);
                     return HttpResponse.newFixedLengthResponse(StandardHttpStatus.OK, Rson.DEFAULT.toJson(detected));
+                }
 
-//                case HTML:
-//                case NODES:
-                default:
-                    return null;
+                case NODES: {
+                    Object[] nodes = this.index.matchAllEmojisAndReturnNodes(body.text);
+                    return HttpResponse.newFixedLengthResponse(StandardHttpStatus.OK, Rson.DEFAULT.toJson(nodes));
+
+                }
+
+                case HTML: {
+                    String emojiProvider = session.getQueryParameters().getOrDefault("provider", EmojiAssets.DEFAULT_PROVIDER);
+                    String html = this.index.matchAllEmojisAndReturnHtml(body.text, emojiProvider);
+
+                    return HttpResponse.newFixedLengthResponse(StandardHttpStatus.OK, html)
+                        .setMimeType("text/html");
+                }
 
             }
+
+            // Can't happen, but we need to shut the compiler up anyway.
+            return null;
         } catch (UnsupportedOperationException | JsonParseException e) {
             return HttpResponse.newFixedLengthResponse(StandardHttpStatus.BAD_REQUEST);
         } catch (Exception e) {
@@ -52,7 +70,7 @@ public class EmojiDetectionRoute implements HttpProvider {
     @JsonClass(exposeAll = true)
     public static class DetectionRequest {
         private String text;
-        private ResponseFormat responseFormat = ResponseFormat.DETECTED_ONLY;
+        private ResponseFormat responseFormat = ResponseFormat.NODES;
 
         @JsonValidate
         private void $validate() {
@@ -62,8 +80,8 @@ public class EmojiDetectionRoute implements HttpProvider {
 
         public static enum ResponseFormat {
             DETECTED_ONLY,
-//            NODES,
-//            HTML;
+            NODES,
+            HTML;
         }
 
     }
