@@ -11,11 +11,13 @@ public class SensaEmojiProvider extends EmojiAssets.AssetImageProvider {
     private static final Map<String, String> skinToneMapping = new HashMap<>();
 
     static {
-        skinToneMapping.put("light skin tone", " skin 1");
+        // @formatter:off
+        skinToneMapping.put(       "light skin tone", " skin 1");
         skinToneMapping.put("medium-light skin tone", " skin 2");
-        skinToneMapping.put("medium skin tone", " skin 3");
-        skinToneMapping.put("medium-dark skin tone", " skin 4");
-        skinToneMapping.put("dark skin tone", " skin 5");
+        skinToneMapping.put(      "medium skin tone", " skin 3");
+        skinToneMapping.put( "medium-dark skin tone", " skin 4");
+        skinToneMapping.put(        "dark skin tone", " skin 5");
+        // @formatter:on
     }
 
     public SensaEmojiProvider() {
