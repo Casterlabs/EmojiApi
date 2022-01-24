@@ -27,7 +27,7 @@ public class EmojiIndex {
     @ToString.Exclude
     private String json;
 
-    private @ToString.Exclude @JsonField String regex;
+    private @Getter @ToString.Exclude @JsonField String regex;
 
     private @Getter @JsonField String version;
     private @Getter @JsonField List<EmojiCategory> categories;
@@ -61,8 +61,9 @@ public class EmojiIndex {
 
             for (Emoji emoji : category.getEmojis()) {
                 this.emojisMap.put(emoji.getIdentifier(), emoji);
-
                 this.allEmojiVariations.addAll(emoji.getVariations());
+
+                this.variationsMap.put(emoji.getShortcode(), new Pair(emoji, emoji.getVariations().get(0)));
 
                 for (Emoji.Variation variation : emoji.getVariations()) {
                     this.variationsMap.put(variation.getSequence(), new Pair<>(emoji, variation));
@@ -117,6 +118,28 @@ public class EmojiIndex {
         }
 
         return emojis;
+    }
+
+    public Object[] matchAllEmojisAndReturnNodes(@NonNull String input) {
+        String regex = String.format("((?<=%s)|(?=%s))", this.regex, this.regex); // We use a lookahead and lookbehind.
+
+        String[] split = input.split(regex); // "start :vulcan_salute: end" -> ["start ", ":vulcan_salute:", " end"]
+        Object[] result = new Object[split.length]; // We're going to be adding another type into here, so that's why it's Object[].
+
+        for (int idx = 0; idx < result.length; idx++) {
+            String part = split[idx];
+            Pair<Emoji, Emoji.Variation> detection = this.getEmojiFromSequence(part);
+
+            if (detection == null) { // Not an emoji.
+                result[idx] = part;
+            } else {
+                Emoji.Variation variation = detection.getSecond();
+
+                result[idx] = variation;
+            }
+        }
+
+        return result;
     }
 
     @Override
