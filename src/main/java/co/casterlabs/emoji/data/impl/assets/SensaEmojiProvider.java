@@ -1,10 +1,22 @@
 package co.casterlabs.emoji.data.impl.assets;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import co.casterlabs.emoji.WebUtil;
 import co.casterlabs.emoji.data.Emoji.Variation;
 import co.casterlabs.emoji.data.EmojiAssets;
 
 public class SensaEmojiProvider extends EmojiAssets.AssetImageProvider {
+    private static final Map<String, String> skinToneMapping = new HashMap<>();
+
+    static {
+        skinToneMapping.put("light skin tone", " skin 1");
+        skinToneMapping.put("medium-light skin tone", " skin 2");
+        skinToneMapping.put("medium skin tone", " skin 3");
+        skinToneMapping.put("medium-dark skin tone", " skin 4");
+        skinToneMapping.put("dark skin tone", " skin 5");
+    }
 
     public SensaEmojiProvider() {
         super(
@@ -20,6 +32,11 @@ public class SensaEmojiProvider extends EmojiAssets.AssetImageProvider {
         String sensaFormat = variation.getIdentifier();
 
         sensaFormat = sensaFormat.substring(0, 1).toUpperCase() + sensaFormat.substring(1); // Capitialize the first letter.
+
+        String skinTone = skinToneMapping.get(variation.getType());
+        if (skinTone != null) {
+            sensaFormat += skinTone;
+        }
 
         sensaFormat = WebUtil.encodeURI(sensaFormat);
 

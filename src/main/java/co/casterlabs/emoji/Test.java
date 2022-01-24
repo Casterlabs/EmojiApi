@@ -23,7 +23,7 @@ public class Test {
         String[] formats = {
                 "Live long and prosper. 🖖 (%s)",
                 "I'm a little teapot, short and stout 🫖 (%s)",
-                "We come in all colors of the rainbow 👋🏻👋🏼👋🏽👋🏾👋🏿 (%s)"
+                "We come in all colors of the rainbow 👋👋🏻👋🏼👋🏽👋🏾👋🏿 (%s)"
         };
 
         for (String format : formats) {
