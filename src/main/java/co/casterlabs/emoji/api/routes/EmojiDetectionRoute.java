@@ -14,7 +14,7 @@ import co.casterlabs.rakurai.json.validation.JsonValidate;
 import co.casterlabs.sora.api.http.HttpProvider;
 import co.casterlabs.sora.api.http.SoraHttpSession;
 import co.casterlabs.sora.api.http.annotations.HttpEndpoint;
-import kotlin.Triple;
+import kotlin.Pair;
 import lombok.AllArgsConstructor;
 import xyz.e3ndr.fastloggingframework.logging.FastLogger;
 
@@ -29,7 +29,7 @@ public class EmojiDetectionRoute implements HttpProvider {
         try {
             DetectionRequest body = Rson.DEFAULT.fromJson(session.getRequestBody(), DetectionRequest.class);
 
-            Set<Triple<String, Emoji, Emoji.Variation>> detected = this.index.matchAllEmojis(body.text);
+            Set<Pair<Emoji, Emoji.Variation>> detected = this.index.matchAllEmojis(body.text);
 
             switch (body.responseFormat) {
                 case DETECTED_ONLY:
