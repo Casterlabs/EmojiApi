@@ -1,5 +1,7 @@
 package co.casterlabs.emoji.api.routes;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 import co.casterlabs.emoji.data.Emoji;
@@ -38,7 +40,13 @@ public class EmojiDetectionRoute implements HttpProvider {
             switch (body.responseFormat) {
                 case DETECTED_ONLY: {
                     Set<Pair<Emoji, Emoji.Variation>> detected = this.index.matchAllEmojis(body.text);
-                    return HttpResponse.newFixedLengthResponse(StandardHttpStatus.OK, Rson.DEFAULT.toJson(detected));
+                    List<Emoji.Variation> variations = new ArrayList<>(detected.size());
+
+                    for (Pair<Emoji, Emoji.Variation> pair : detected) {
+                        variations.add(pair.getSecond());
+                    }
+
+                    return HttpResponse.newFixedLengthResponse(StandardHttpStatus.OK, Rson.DEFAULT.toJson(variations));
                 }
 
                 case NODES: {
