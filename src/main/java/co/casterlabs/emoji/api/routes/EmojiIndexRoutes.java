@@ -3,7 +3,7 @@ package co.casterlabs.emoji.api.routes;
 import java.util.ArrayList;
 import java.util.List;
 
-import co.casterlabs.emoji.data.EmojiCategory;
+import co.casterlabs.emoji.data.Emoji;
 import co.casterlabs.emoji.data.EmojiIndex;
 import co.casterlabs.rakurai.io.http.HttpResponse;
 import co.casterlabs.rakurai.io.http.StandardHttpStatus;
@@ -24,14 +24,14 @@ public class EmojiIndexRoutes implements HttpProvider {
 
     @HttpEndpoint(uri = "/public/v3/emojis/all")
     public HttpResponse onGetAllEmojis(SoraHttpSession session) {
-        List<EmojiCategory> categories = this.index.getCategories();
-        List<String> categoryNames = new ArrayList<>(categories.size());
+        List<Emoji> emojis = this.index.getAllEmojis();
+        List<String> emojiNames = new ArrayList<>(emojis.size());
 
-        for (EmojiCategory category : categories) {
-            categoryNames.add(category.getId());
+        for (Emoji emoji : emojis) {
+            emojiNames.add(emoji.getIdentifier());
         }
 
-        return HttpResponse.newFixedLengthResponse(StandardHttpStatus.OK, Rson.DEFAULT.toJson(categoryNames))
+        return HttpResponse.newFixedLengthResponse(StandardHttpStatus.OK, Rson.DEFAULT.toJson(emojiNames))
             .setMimeType("application/json");
     }
 

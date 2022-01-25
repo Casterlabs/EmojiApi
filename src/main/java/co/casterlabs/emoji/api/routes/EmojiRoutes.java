@@ -14,7 +14,7 @@ import lombok.AllArgsConstructor;
 public class EmojiRoutes implements HttpProvider {
     private EmojiIndex index;
 
-    @HttpEndpoint(uri = "/public/v3/emojis/emoji/id/:query")
+    @HttpEndpoint(uri = "/public/v3/emojis/emoji/:query")
     public HttpResponse onGetEmojiById(SoraHttpSession session) {
         String query = WebUtil.decodeURI(session.getUriParameters().get("query"));
         Emoji result = this.index.getEmoji(query);
@@ -27,7 +27,7 @@ public class EmojiRoutes implements HttpProvider {
         }
     }
 
-    @HttpEndpoint(uri = "/public/v3/emojis/emoji/id/:query/regex")
+    @HttpEndpoint(uri = "/public/v3/emojis/emoji/:query/regex")
     public HttpResponse onGetEmojiRegexById(SoraHttpSession session) {
         String query = session.getUriParameters().get("query");
         Emoji result = this.index.getEmoji(query);
