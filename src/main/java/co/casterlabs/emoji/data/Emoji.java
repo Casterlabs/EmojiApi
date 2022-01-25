@@ -28,6 +28,7 @@ public class Emoji {
     @ToString.Exclude
     private String json;
 
+    @JsonExclude
     @ToString.Exclude
     private String regex;
 
