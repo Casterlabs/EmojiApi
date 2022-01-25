@@ -189,7 +189,7 @@ public class EmojiIndex {
 
                 EmojiAssets.AssetImageProvider.AssetImageSet imageSet = variation.getAssets().getAsset(emojiProvider);
 
-                if (imageSet.isSupported()) {
+                if ((imageSet != null) && imageSet.isSupported()) {
                     htmlBuilder.append(
                         String.format(
                             "<img title='%s' alt='%s' src='%s' data-type='emoji' style='height: 1em; width: auto; display: inline-block; vertical-align: middle;' />",
