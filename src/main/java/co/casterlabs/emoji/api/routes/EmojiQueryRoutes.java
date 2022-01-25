@@ -32,7 +32,14 @@ public class EmojiQueryRoutes implements HttpProvider {
             categoryNames.add(category.getId());
         }
 
-        return HttpResponse.newFixedLengthResponse(StandardHttpStatus.OK, Rson.DEFAULT.toJson(categoryNames));
+        return HttpResponse.newFixedLengthResponse(StandardHttpStatus.OK, Rson.DEFAULT.toJson(categoryNames))
+            .setMimeType("application/json");
+    }
+
+    @HttpEndpoint(uri = "/public/v3/emojis/all/regex")
+    public HttpResponse onGetAllEmojisRegex(SoraHttpSession session) {
+        return HttpResponse.newFixedLengthResponse(StandardHttpStatus.OK, this.index.getRegex())
+            .setMimeType("text/plain; charset=utf-8");
     }
 
     @HttpEndpoint(uri = "/public/v3/emojis/emoji/id/:query")
@@ -43,7 +50,21 @@ public class EmojiQueryRoutes implements HttpProvider {
         if (result == null) {
             return HttpResponse.newFixedLengthResponse(StandardHttpStatus.NOT_FOUND);
         } else {
-            return HttpResponse.newFixedLengthResponse(StandardHttpStatus.OK, result.getJson());
+            return HttpResponse.newFixedLengthResponse(StandardHttpStatus.OK, result.getJson())
+                .setMimeType("application/json");
+        }
+    }
+
+    @HttpEndpoint(uri = "/public/v3/emojis/emoji/id/:query/regex")
+    public HttpResponse onGetEmojiRegexById(SoraHttpSession session) {
+        String query = session.getUriParameters().get("query");
+        Emoji result = this.index.getEmoji(query);
+
+        if (result == null) {
+            return HttpResponse.newFixedLengthResponse(StandardHttpStatus.NOT_FOUND);
+        } else {
+            return HttpResponse.newFixedLengthResponse(StandardHttpStatus.OK, result.getRegex())
+                .setMimeType("text/plain; charset=utf-8");
         }
     }
 
@@ -55,7 +76,21 @@ public class EmojiQueryRoutes implements HttpProvider {
         if (result == null) {
             return HttpResponse.newFixedLengthResponse(StandardHttpStatus.NOT_FOUND);
         } else {
-            return HttpResponse.newFixedLengthResponse(StandardHttpStatus.OK, result.getJson());
+            return HttpResponse.newFixedLengthResponse(StandardHttpStatus.OK, result.getJson())
+                .setMimeType("application/json");
+        }
+    }
+
+    @HttpEndpoint(uri = "/public/v3/emojis/category/:query/regex")
+    public HttpResponse onGetEmojiCategoryRegex(SoraHttpSession session) {
+        String query = session.getUriParameters().get("query");
+        EmojiCategory result = this.index.getCategoryById(query);
+
+        if (result == null) {
+            return HttpResponse.newFixedLengthResponse(StandardHttpStatus.NOT_FOUND);
+        } else {
+            return HttpResponse.newFixedLengthResponse(StandardHttpStatus.OK, result.getRegex())
+                .setMimeType("text/plain; charset=utf-8");
         }
     }
 
@@ -67,8 +102,14 @@ public class EmojiQueryRoutes implements HttpProvider {
         if (result == null) {
             return HttpResponse.newFixedLengthResponse(StandardHttpStatus.NOT_FOUND);
         } else {
-            return HttpResponse.newFixedLengthResponse(StandardHttpStatus.OK, Rson.DEFAULT.toJson(result));
+            return HttpResponse.newFixedLengthResponse(StandardHttpStatus.OK, Rson.DEFAULT.toJson(result))
+                .setMimeType("application/json");
         }
+    }
+
+    @HttpEndpoint(uri = "/public/v3/emojis/subcategory/:query/regex")
+    public HttpResponse onGetEmojiSubcategoryRegex(SoraHttpSession session) {
+        return HttpResponse.newFixedLengthResponse(StandardHttpStatus.NOT_IMPLEMENTED, "Not here.");
     }
 
 }
