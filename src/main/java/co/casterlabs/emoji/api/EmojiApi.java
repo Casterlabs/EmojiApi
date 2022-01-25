@@ -20,7 +20,9 @@ public class EmojiApi extends SoraPlugin {
     @SneakyThrows
     @Override
     public void onInit(Sora sora) {
-        this.getClassLoader().setDefaultAssertionStatus(true);
+        if (this.getClassLoader() != null) {
+            this.getClassLoader().setDefaultAssertionStatus(true);
+        }
 
         this.index = EmojiIndexGenerator.load();
 
