@@ -24,7 +24,7 @@ public class EmojiDetectionRoute implements HttpProvider {
     private EmojiIndex index;
 
     @HttpEndpoint(uri = "/public/v3/emojis/detect", allowedMethods = {
-            HttpMethod.GET
+            HttpMethod.POST
     })
     public HttpResponse onDetectEmojis(SoraHttpSession session) {
         try {
