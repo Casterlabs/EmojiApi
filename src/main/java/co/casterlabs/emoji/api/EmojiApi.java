@@ -2,8 +2,11 @@ package co.casterlabs.emoji.api;
 
 import org.jetbrains.annotations.Nullable;
 
+import co.casterlabs.emoji.api.routes.EmojiCategoryRoutes;
 import co.casterlabs.emoji.api.routes.EmojiDetectionRoute;
-import co.casterlabs.emoji.api.routes.EmojiQueryRoutes;
+import co.casterlabs.emoji.api.routes.EmojiRoutes;
+import co.casterlabs.emoji.api.routes.EmojiIndexRoutes;
+import co.casterlabs.emoji.api.routes.EmojiSubcategoryRoutes;
 import co.casterlabs.emoji.data.EmojiIndex;
 import co.casterlabs.emoji.generator.EmojiIndexGenerator;
 import co.casterlabs.sora.Sora;
@@ -26,7 +29,10 @@ public class EmojiApi extends SoraPlugin {
 
         this.index = EmojiIndexGenerator.load();
 
-        sora.addHttpProvider(this, new EmojiQueryRoutes(this.index));
+        sora.addHttpProvider(this, new EmojiIndexRoutes(this.index));
+        sora.addHttpProvider(this, new EmojiCategoryRoutes(this.index));
+        sora.addHttpProvider(this, new EmojiSubcategoryRoutes(this.index));
+        sora.addHttpProvider(this, new EmojiRoutes(this.index));
         sora.addHttpProvider(this, new EmojiDetectionRoute(this.index));
     }
 
