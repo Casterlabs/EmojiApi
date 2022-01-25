@@ -26,19 +26,19 @@ import lombok.ToString;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class EmojiCategory {
 
-    @Getter
     @JsonExclude
     @ToString.Exclude
     private String json;
 
-    private @ToString.Exclude String regex;
+    @JsonExclude
+    @ToString.Exclude
+    private String regex;
 
     private String id;
     private String name;
     private List<Emoji> emojis;
     private List<String> subcategories;
 
-    @Getter
     @JsonExclude
     @ToString.Exclude
     private List<Emoji.Variation> allEmojiVariations = new LinkedList<>();

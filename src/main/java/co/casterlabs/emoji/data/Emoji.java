@@ -24,10 +24,13 @@ import lombok.ToString;
 public class Emoji {
     private static final List<String> JOINER_WORDS = Arrays.asList("with", "and", "in");
 
-    @Getter
     @JsonExclude
     @ToString.Exclude
     private String json;
+
+    @JsonExclude
+    @ToString.Exclude
+    private String regex;
 
     private String categoryId;
     private String subcategoryId;
@@ -37,8 +40,6 @@ public class Emoji {
     private String shortcode;
 
     private @ToString.Exclude List<Variation> variations;
-
-    private @ToString.Exclude String regex;
 
     @JsonExclude
     @ToString.Exclude
@@ -108,13 +109,13 @@ public class Emoji {
 
         return new Emoji(
             null,
+            null,
             categoryId,
             subcategoryId,
             name_sb.toString(),
             identifier,
             null,
             variations,
-            null,
             new HashMap<>()
         );
     };

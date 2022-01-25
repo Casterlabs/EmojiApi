@@ -14,7 +14,6 @@ import org.jetbrains.annotations.Nullable;
 
 import co.casterlabs.emoji.WebUtil;
 import co.casterlabs.rakurai.json.Rson;
-import co.casterlabs.rakurai.json.annotating.JsonExclude;
 import co.casterlabs.rakurai.json.annotating.JsonField;
 import co.casterlabs.rakurai.json.validation.JsonValidate;
 import kotlin.Pair;
@@ -22,19 +21,23 @@ import lombok.Getter;
 import lombok.NonNull;
 import lombok.ToString;
 
+@Getter
 public class EmojiIndex {
-    @Getter
-    @JsonExclude
+
     @ToString.Exclude
     private String json;
 
-    private @Getter @ToString.Exclude @JsonField String regex;
+    @ToString.Exclude
+    private String regex;
 
-    private @Getter @JsonField String version;
-    private @Getter @JsonField List<EmojiCategory> categories;
-    private @Getter List<Emoji> allEmojis = new LinkedList<>();
-    private @Getter List<Emoji.Variation> allEmojiVariations = new LinkedList<>();
+    @JsonField
+    private String version;
 
+    @JsonField
+    private List<EmojiCategory> categories;
+
+    private List<Emoji> allEmojis = new LinkedList<>();
+    private List<Emoji.Variation> allEmojiVariations = new LinkedList<>();
     private @ToString.Exclude Map<String, EmojiCategory> categoryMap = new HashMap<>();
     private @ToString.Exclude Map<String, List<Emoji>> subcategoriesMap = new HashMap<>();
     private @ToString.Exclude Map<String, Emoji> emojisMap = new HashMap<>();
