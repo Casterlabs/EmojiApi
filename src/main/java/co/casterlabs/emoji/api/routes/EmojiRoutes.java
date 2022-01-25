@@ -1,5 +1,6 @@
 package co.casterlabs.emoji.api.routes;
 
+import co.casterlabs.emoji.WebUtil;
 import co.casterlabs.emoji.data.Emoji;
 import co.casterlabs.emoji.data.EmojiIndex;
 import co.casterlabs.rakurai.io.http.HttpResponse;
@@ -15,7 +16,7 @@ public class EmojiRoutes implements HttpProvider {
 
     @HttpEndpoint(uri = "/public/v3/emojis/emoji/id/:query")
     public HttpResponse onGetEmojiById(SoraHttpSession session) {
-        String query = session.getUriParameters().get("query");
+        String query = WebUtil.decodeURI(session.getUriParameters().get("query"));
         Emoji result = this.index.getEmoji(query);
 
         if (result == null) {
