@@ -29,7 +29,7 @@ public class EmojiRoutes implements HttpProvider {
 
     @HttpEndpoint(uri = "/public/v3/emojis/emoji/:query/regex")
     public HttpResponse onGetEmojiRegexById(SoraHttpSession session) {
-        String query = session.getUriParameters().get("query");
+        String query = WebUtil.decodeURI(session.getUriParameters().get("query"));
         Emoji result = this.index.getEmoji(query);
 
         if (result == null) {
