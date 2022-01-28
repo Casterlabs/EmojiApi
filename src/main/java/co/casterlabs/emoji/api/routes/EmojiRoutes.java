@@ -5,6 +5,7 @@ import co.casterlabs.emoji.data.Emoji;
 import co.casterlabs.emoji.data.EmojiIndex;
 import co.casterlabs.rakurai.io.http.HttpResponse;
 import co.casterlabs.rakurai.io.http.StandardHttpStatus;
+import co.casterlabs.rakurai.json.Rson;
 import co.casterlabs.sora.api.http.HttpProvider;
 import co.casterlabs.sora.api.http.SoraHttpSession;
 import co.casterlabs.sora.api.http.annotations.HttpEndpoint;
@@ -22,7 +23,7 @@ public class EmojiRoutes implements HttpProvider {
         if (result == null) {
             return HttpResponse.newFixedLengthResponse(StandardHttpStatus.NOT_FOUND);
         } else {
-            return HttpResponse.newFixedLengthResponse(StandardHttpStatus.OK, result.getJson())
+            return HttpResponse.newFixedLengthResponse(StandardHttpStatus.OK, Rson.DEFAULT.toJson(result))
                 .setMimeType("application/json");
         }
     }

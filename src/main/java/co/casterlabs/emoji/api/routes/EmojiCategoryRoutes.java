@@ -38,7 +38,7 @@ public class EmojiCategoryRoutes implements HttpProvider {
         if (result == null) {
             return HttpResponse.newFixedLengthResponse(StandardHttpStatus.NOT_FOUND);
         } else {
-            return HttpResponse.newFixedLengthResponse(StandardHttpStatus.OK, result.getJson())
+            return HttpResponse.newFixedLengthResponse(StandardHttpStatus.OK, Rson.DEFAULT.toJson(result))
                 .setMimeType("application/json");
         }
     }

@@ -20,6 +20,7 @@ import kotlin.Pair;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.ToString;
+import xyz.e3ndr.fastloggingframework.logging.FastLogger;
 
 @Getter
 public class EmojiIndex {
@@ -90,6 +91,20 @@ public class EmojiIndex {
         this.allEmojis = Collections.unmodifiableList(this.allEmojis);
         this.allEmojiVariations = Collections.unmodifiableList(this.allEmojiVariations);
 
+        // Wait for everything to finish loading before creating json.
+        FastLogger.logStatic("Waiting for validation to finish.");
+        for (Emoji.Variation variation : this.allEmojiVariations) {
+            for (EmojiAssets.AssetImageProvider.AssetImageSet set : variation.getAssets().getAssets().values()) {
+                if (set.getValidationThread() != null) {
+                    try {
+                        set.getValidationThread().join();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
+        FastLogger.logStatic("Loaded.");
         this.json = Rson.DEFAULT.toJson(this).toString(true);
     }
 

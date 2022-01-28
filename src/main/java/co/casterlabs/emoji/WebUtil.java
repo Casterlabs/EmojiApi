@@ -5,6 +5,8 @@ import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.stream.Collectors;
 
+import org.jetbrains.annotations.Nullable;
+
 import lombok.NonNull;
 import lombok.SneakyThrows;
 import okhttp3.OkHttpClient;
@@ -17,6 +19,23 @@ public class WebUtil {
     public static String sendHttpRequest(@NonNull Request.Builder builder) throws IOException {
         try (Response response = client.newCall(builder.build()).execute()) {
             return response.body().string();
+        }
+    }
+
+    public static boolean doesContentExist(@Nullable String url) {
+        if (url == null) {
+            return false;
+        }
+
+        Request request = new Request.Builder()
+            .url(url)
+            .build();
+
+        try (Response response = client.newCall(request).execute()) {
+            return response.isSuccessful();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
         }
     }
 

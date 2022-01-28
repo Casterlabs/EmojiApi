@@ -7,10 +7,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
 
-import co.casterlabs.rakurai.json.Rson;
 import co.casterlabs.rakurai.json.annotating.JsonClass;
 import co.casterlabs.rakurai.json.annotating.JsonExclude;
-import co.casterlabs.rakurai.json.validation.JsonValidate;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -23,10 +21,6 @@ import lombok.ToString;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class Emoji {
     private static final List<String> JOINER_WORDS = Arrays.asList("with", "and", "in");
-
-    @JsonExclude
-    @ToString.Exclude
-    private String json;
 
     @ToString.Exclude
     private String regex;
@@ -71,8 +65,6 @@ public class Emoji {
 
         this.variations = Collections.unmodifiableList(this.variations);
         this.variationsMap = Collections.unmodifiableMap(this.variationsMap);
-
-        this.json = Rson.DEFAULT.toJsonString(this);
     }
 
     @Deprecated
@@ -107,7 +99,6 @@ public class Emoji {
         name_sb.deleteCharAt(0); // Remove additional space
 
         return new Emoji(
-            null,
             null,
             categoryId,
             subcategoryId,
@@ -146,11 +137,6 @@ public class Emoji {
             this.sequence = sequence;
             this.codeSequence = codeSequence;
             this.regex = '(' + SPECIAL_REGEX_CHARS.matcher(this.sequence).replaceAll("\\\\$0") + ')';
-            this.$validate();
-        }
-
-        @JsonValidate
-        private void $validate() {
             this.assets = new EmojiAssets(this);
         }
 

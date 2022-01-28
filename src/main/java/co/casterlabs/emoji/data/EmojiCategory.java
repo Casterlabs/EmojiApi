@@ -9,7 +9,6 @@ import java.util.Map;
 
 import org.jetbrains.annotations.Nullable;
 
-import co.casterlabs.rakurai.json.Rson;
 import co.casterlabs.rakurai.json.annotating.JsonClass;
 import co.casterlabs.rakurai.json.annotating.JsonExclude;
 import co.casterlabs.rakurai.json.validation.JsonValidate;
@@ -25,10 +24,6 @@ import lombok.ToString;
 @JsonClass(exposeAll = true)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class EmojiCategory {
-
-    @JsonExclude
-    @ToString.Exclude
-    private String json;
 
     @JsonExclude
     @ToString.Exclude
@@ -101,8 +96,6 @@ public class EmojiCategory {
         this.subcategories = Collections.unmodifiableList(new ArrayList<>(this.subcategoriesMap.keySet()));
         this.variationsMap = Collections.unmodifiableMap(this.variationsMap);
         this.emojis = Collections.unmodifiableList(this.emojis);
-
-        this.json = Rson.DEFAULT.toJsonString(this);
     }
 
     @Deprecated
