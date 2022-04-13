@@ -34,6 +34,10 @@ public class WebUtil {
         try (Response response = client.newCall(request).execute()) {
             return response.isSuccessful();
         } catch (IOException e) {
+            if (e.getMessage().equals("timeout")) {
+                return doesContentExist(url); // Try again.
+            }
+            System.err.println(url);
             e.printStackTrace();
             return false;
         }

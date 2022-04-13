@@ -4,6 +4,9 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 import org.jetbrains.annotations.Nullable;
 
@@ -31,6 +34,8 @@ import lombok.ToString;
 
 @JsonClass(serializer = _EmojiAssetsSerializer.class)
 public class EmojiAssets {
+    private static ExecutorService VALIDATION_SERVICE = Executors.newFixedThreadPool(64);
+
     public static final String DEFAULT_PROVIDER = "noto-emoji"; // They support the most.
 
     /* 
@@ -103,7 +108,7 @@ public class EmojiAssets {
             private @Nullable String pngUrl;
             private @Nullable String svgUrl;
 
-            private @JsonExclude Thread validationThread;
+            private @JsonExclude Future<?> validationFuture;
 
             @JsonDeserializationMethod("provider")
             private void $deserialize_provider(JsonElement e) throws JsonParseException {
@@ -132,7 +137,11 @@ public class EmojiAssets {
 
                 // Note that this is not called during load() since it'll get deserialized
                 // instead.
-                this.validationThread = new Thread(() -> {
+                this.validationFuture = VALIDATION_SERVICE.submit(() -> {
+                    try {
+                        Thread.sleep(10); // This delay prevents rate limitng.
+                    } catch (InterruptedException e) {}
+
                     boolean valid = WebUtil.doesContentExist(this.pngUrl) ||
                         WebUtil.doesContentExist(this.svgUrl);
 
@@ -142,7 +151,6 @@ public class EmojiAssets {
                         this.supported = false;
                     }
                 });
-                this.validationThread.start();
             }
 
             @Deprecated

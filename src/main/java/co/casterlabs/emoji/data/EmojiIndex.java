@@ -95,10 +95,10 @@ public class EmojiIndex {
         FastLogger.logStatic("Waiting for validation to finish.");
         for (Emoji.Variation variation : this.allEmojiVariations) {
             for (EmojiAssets.AssetImageProvider.AssetImageSet set : variation.getAssets().getAssets().values()) {
-                if (set.getValidationThread() != null) {
+                if (set.getValidationFuture() != null) {
                     try {
-                        set.getValidationThread().join();
-                    } catch (InterruptedException e) {
+                        set.getValidationFuture().get();
+                    } catch (Exception e) {
                         e.printStackTrace();
                     }
                 }
