@@ -192,13 +192,17 @@ public class EmojiIndex {
         return result;
     }
 
-    public String matchAllEmojisAndReturnHtml(@NonNull String input, @NonNull String emojiProvider) {
+    public String matchAllEmojisAndReturnHtml(@NonNull String input, @NonNull String emojiProvider, boolean escapeText) {
         Object[] nodes = this.matchAllEmojisAndReturnNodes(input);
         StringBuilder htmlBuilder = new StringBuilder();
 
         for (Object node : nodes) {
             if (node instanceof String) {
-                htmlBuilder.append(String.format("<span data-type='text'>%s</span>", WebUtil.escapeHtml((String) node)));
+                if (escapeText) {
+                    htmlBuilder.append(String.format("<span data-type='text'>%s</span>", WebUtil.escapeHtml((String) node)));
+                } else {
+                    htmlBuilder.append((String) node);
+                }
             } else {
                 Emoji.Variation variation = (Emoji.Variation) node;
 

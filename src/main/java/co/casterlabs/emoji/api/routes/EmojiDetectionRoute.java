@@ -57,7 +57,9 @@ public class EmojiDetectionRoute implements HttpProvider {
 
                 case HTML: {
                     String emojiProvider = session.getQueryParameters().getOrDefault("provider", EmojiAssets.DEFAULT_PROVIDER);
-                    String html = this.index.matchAllEmojisAndReturnHtml(body.text, emojiProvider);
+                    boolean escapeText = session.getQueryParameters().getOrDefault("escape", "true").equals("true");
+
+                    String html = this.index.matchAllEmojisAndReturnHtml(body.text, emojiProvider, escapeText);
 
                     return HttpResponse.newFixedLengthResponse(StandardHttpStatus.OK, html)
                         .setMimeType("text/html");
