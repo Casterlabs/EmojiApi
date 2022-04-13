@@ -10,7 +10,7 @@ public class TwemojiProvider extends EmojiAssets.AssetImageProvider {
             "Twemoji",
             "twemoji",
             "https://twemoji.twitter.com",
-            13.1 // https://github.com/twitter/twemoji#:~:text=across%20all%20platforms.-,Twemoji%20v13.1,-adheres%20to%20the
+            14.0 // https://github.com/twitter/twemoji#:~:text=Twemoji%20v14.0-,adheres%20to%20the,-Unicode%2014.0%20spec
         );
     }
 
