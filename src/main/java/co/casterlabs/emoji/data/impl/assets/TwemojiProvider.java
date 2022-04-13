@@ -16,7 +16,7 @@ public class TwemojiProvider extends EmojiAssets.AssetImageProvider {
 
     @Override
     protected AssetImageSet produce0(Variation variation) {
-        String unicodeformat = String.join("-", variation.getCodeSequence());
+        String unicodeformat = String.join("-", variation.getCodeSequence()).toLowerCase();
 
         return new AssetImageSet(
             this,

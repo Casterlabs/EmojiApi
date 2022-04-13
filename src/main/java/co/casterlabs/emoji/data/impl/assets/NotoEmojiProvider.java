@@ -16,7 +16,7 @@ public class NotoEmojiProvider extends EmojiAssets.AssetImageProvider {
 
     @Override
     protected AssetImageSet produce0(Variation variation) {
-        String unicodeformat = String.join("_", variation.getCodeSequence());
+        String unicodeformat = String.join("_", variation.getCodeSequence()).toLowerCase();
 
         return new AssetImageSet(
             this,
