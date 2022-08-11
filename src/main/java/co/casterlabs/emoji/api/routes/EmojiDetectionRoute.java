@@ -33,7 +33,7 @@ public class EmojiDetectionRoute implements HttpProvider {
             DetectionRequest body = Rson.DEFAULT.fromJson(session.getRequestBody(), DetectionRequest.class);
 
             // Too large.
-            if (body.text.length() > 1024) {
+            if (body.text.length() > 10240 /* Bytes */) {
                 return HttpResponse.newFixedLengthResponse(StandardHttpStatus.PAYLOAD_TOO_LARGE);
             }
 
