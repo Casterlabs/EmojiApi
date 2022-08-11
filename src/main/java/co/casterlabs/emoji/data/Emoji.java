@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
 
+import co.casterlabs.emoji.WebUtil;
 import co.casterlabs.rakurai.json.annotating.JsonClass;
 import co.casterlabs.rakurai.json.annotating.JsonExclude;
 import lombok.AccessLevel;
@@ -143,6 +144,33 @@ public class Emoji {
         @Override
         public String toString() {
             return this.name;
+        }
+
+        public String toHTML(@NonNull String provider) {
+            if (provider.equals("system")) {
+                return String.format(
+                    "<span title='%s' data-type='system_emoji'>%s</span>",
+                    WebUtil.escapeHtml(this.name),
+                    this.sequence
+                );
+            }
+
+            EmojiAssets.AssetImageProvider.AssetImageSet imageSet = this.assets.getAsset(provider);
+
+            if ((imageSet != null) && imageSet.isSupported()) {
+                return String.format(
+                    "<img title='%s' alt='%s' src='%s' data-type='emoji' style='height: 1em; width: auto; display: inline-block; vertical-align: middle;' />",
+                    WebUtil.escapeHtml(this.name),     // "vulcan salute: light skin tone"
+                    WebUtil.escapeHtml(this.sequence), // the actual emoji.
+                    imageSet.getSvgUrl()
+                );
+            } else {
+                return String.format(
+                    "<span title='%s' data-type='unsupported_emoji'>%s</span>",
+                    WebUtil.escapeHtml(this.name),
+                    this.sequence
+                );
+            }
         }
 
     }

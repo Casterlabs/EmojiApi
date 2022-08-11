@@ -206,27 +206,7 @@ public class EmojiIndex {
             } else {
                 Emoji.Variation variation = (Emoji.Variation) node;
 
-                EmojiAssets.AssetImageProvider.AssetImageSet imageSet = variation.getAssets().getAsset(emojiProvider);
-
-                if ((imageSet != null) && imageSet.isSupported()) {
-                    htmlBuilder.append(
-                        String.format(
-                            "<img title='%s' alt='%s' src='%s' data-type='emoji' style='height: 1em; width: auto; display: inline-block; vertical-align: middle;' />",
-                            WebUtil.escapeHtml(variation.getName()), // "vulcan salute: light skin tone"
-                            WebUtil.escapeHtml(variation.getSequence()),   // the actual emoji.
-                            imageSet.getSvgUrl()
-                        )
-                    );
-                } else {
-                    htmlBuilder.append(
-                        String.format(
-                            "<span title='%s' alt='%s' data-type='unsupported_emoji'>:%s:</span>",
-                            WebUtil.escapeHtml(variation.getName()), // "vulcan salute: dark skin tone"
-                            WebUtil.escapeHtml(variation.getSequence()),   // the actual emoji.
-                            WebUtil.escapeHtml(variation.getIdentifier())
-                        )
-                    );
-                }
+                htmlBuilder.append(variation.toHTML(emojiProvider));
             }
         }
 
