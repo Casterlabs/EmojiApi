@@ -32,18 +32,16 @@ public class SensaEmojiProvider extends EmojiAssets.AssetImageProvider {
     @Override
     protected AssetImageSet produce0(Variation variation) {
         String sensaFormat = variation.getIdentifier();
-
         sensaFormat = sensaFormat.substring(0, 1).toUpperCase() + sensaFormat.substring(1); // Capitialize the first letter.
 
+        // Parse skin colors
+        // Format is as follows: "Vulcan salute skin 1.svg" (1-5)
         String skinTone = skinToneMapping.get(variation.getType());
         if (skinTone != null) {
             sensaFormat += skinTone;
         }
 
         sensaFormat = WebUtil.encodeURI(sensaFormat);
-
-        // TODO parse skin colors
-        // Format is as follows: "Vulcan salute skin 1.svg" (1-5)
 
         return new AssetImageSet(
             this,
