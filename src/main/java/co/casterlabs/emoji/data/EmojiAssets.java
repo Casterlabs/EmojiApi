@@ -4,8 +4,6 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
 import org.jetbrains.annotations.Nullable;
@@ -17,6 +15,7 @@ import co.casterlabs.emoji.data.impl.assets.NotoEmojiProvider;
 import co.casterlabs.emoji.data.impl.assets.OpenMojiProvider;
 import co.casterlabs.emoji.data.impl.assets.SensaEmojiProvider;
 import co.casterlabs.emoji.data.impl.assets.TwemojiProvider;
+import co.casterlabs.emoji.generator.EmojiIndexGenerator;
 import co.casterlabs.rakurai.json.Rson;
 import co.casterlabs.rakurai.json.annotating.JsonClass;
 import co.casterlabs.rakurai.json.annotating.JsonDeserializationMethod;
@@ -34,8 +33,6 @@ import lombok.ToString;
 
 @JsonClass(serializer = _EmojiAssetsSerializer.class)
 public class EmojiAssets {
-    private static ExecutorService VALIDATION_SERVICE = Executors.newFixedThreadPool(64);
-
     public static final String DEFAULT_PROVIDER = "noto-emoji"; // They support the most.
 
     /* 
@@ -137,7 +134,7 @@ public class EmojiAssets {
 
                 // Note that this is not called during load() since it'll get deserialized
                 // instead.
-                this.validationFuture = VALIDATION_SERVICE.submit(() -> {
+                this.validationFuture = EmojiIndexGenerator.getValidationThreadPool().submit(() -> {
                     try {
                         Thread.sleep(10); // This delay prevents rate limitng.
                     } catch (InterruptedException e) {}

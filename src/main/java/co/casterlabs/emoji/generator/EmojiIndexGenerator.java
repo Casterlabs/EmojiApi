@@ -9,6 +9,8 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import co.casterlabs.emoji.WebUtil;
 import co.casterlabs.emoji.data.Emoji;
@@ -16,6 +18,7 @@ import co.casterlabs.emoji.data.EmojiCategory;
 import co.casterlabs.emoji.data.EmojiIndex;
 import co.casterlabs.rakurai.io.IOUtil;
 import co.casterlabs.rakurai.json.Rson;
+import lombok.Getter;
 import okhttp3.Request;
 import xyz.e3ndr.fastloggingframework.logging.FastLogger;
 
@@ -23,7 +26,9 @@ public class EmojiIndexGenerator {
     private static final String EMOJI_VERSION = "E15.0";
     private static final String EMOJI_TEST_URL = "https://www.unicode.org/Public/emoji/" + EMOJI_VERSION.substring(1) + "/emoji-test.txt";
 
-    private static final FastLogger logger = new FastLogger();
+    private static @Getter ExecutorService validationThreadPool;
+
+    private static final FastLogger logger = new FastLogger("EmojiIndex");
 
     /**
      * @deprecated This is to be called in an dev environment to generate the
@@ -32,17 +37,24 @@ public class EmojiIndexGenerator {
      */
     @Deprecated
     public static void main(String[] args) throws IOException {
+        validationThreadPool = Executors.newFixedThreadPool(64);
+        logger.info("Building emoji index...");
         generate();
+        logger.info("Built.");
     }
 
     /**
      * Loads the index from the cached version in the jar's resources.
      */
     public static EmojiIndex load() throws IOException {
+        logger.info("Loading emoji index...");
+
         try (InputStream in = EmojiIndexGenerator.class.getClassLoader().getResourceAsStream("emoji_index.json")) {
             String contents = IOUtil.readInputStreamString(in, StandardCharsets.UTF_8);
 
             return Rson.DEFAULT.fromJson(contents, EmojiIndex.class);
+        } finally {
+            logger.info("Loaded.");
         }
     }
 

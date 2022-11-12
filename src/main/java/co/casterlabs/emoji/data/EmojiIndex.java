@@ -45,16 +45,21 @@ public class EmojiIndex {
     private @ToString.Exclude Map<String, Pair<Emoji, Emoji.Variation>> variationsMap = new HashMap<>();
 
     @Deprecated
-    public EmojiIndex() {} // For Rson.
+    public EmojiIndex() {
+        FastLogger.logStatic("Deserializing emoji index...");
+    } // For Rson.
 
     public EmojiIndex(String version, List<EmojiCategory> categories) {
-        this.version = version;
         this.categories = categories;
         this.$validate();
+        this.version = version;
     }
 
     @JsonValidate
     private void $validate() {
+        FastLogger.logStatic("Validating and optimizing emoji index...");
+
+        boolean isBuildingFromScratch = this.version == null;
         StringBuilder regexBuilder = new StringBuilder();
 
         for (EmojiCategory category : this.categories) {
@@ -91,20 +96,22 @@ public class EmojiIndex {
         this.allEmojis = Collections.unmodifiableList(this.allEmojis);
         this.allEmojiVariations = Collections.unmodifiableList(this.allEmojiVariations);
 
-        // Wait for everything to finish loading before creating json.
-        FastLogger.logStatic("Waiting for validation to finish.");
-        for (Emoji.Variation variation : this.allEmojiVariations) {
-            for (EmojiAssets.AssetImageProvider.AssetImageSet set : variation.getAssets().getAssets().values()) {
-                if (set.getValidationFuture() != null) {
-                    try {
-                        set.getValidationFuture().get();
-                    } catch (Exception e) {
-                        e.printStackTrace();
+        if (isBuildingFromScratch) {
+            // Wait for everything to finish loading before creating json.
+            FastLogger.logStatic("Waiting for additional validation to finish.");
+            for (Emoji.Variation variation : this.allEmojiVariations) {
+                for (EmojiAssets.AssetImageProvider.AssetImageSet set : variation.getAssets().getAssets().values()) {
+                    if (set.getValidationFuture() != null) {
+                        try {
+                            set.getValidationFuture().get();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
                     }
                 }
             }
         }
-        FastLogger.logStatic("Loaded.");
+
         this.json = Rson.DEFAULT.toJson(this).toString(true);
     }
 
