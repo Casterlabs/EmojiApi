@@ -10,7 +10,7 @@ public class NotoEmojiProvider extends EmojiAssets.AssetImageProvider {
             "Noto Emoji",
             "noto-emoji",
             "https://github.com/googlefonts/noto-emoji",
-            14.0 // https://github.com/googlefonts/noto-emoji/releases/tag/v2.034
+            15.0 // https://github.com/googlefonts/noto-emoji/releases/tag/v2.038
         );
     }
 
