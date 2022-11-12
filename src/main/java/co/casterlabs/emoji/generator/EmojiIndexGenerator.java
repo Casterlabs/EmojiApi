@@ -20,7 +20,7 @@ import okhttp3.Request;
 import xyz.e3ndr.fastloggingframework.logging.FastLogger;
 
 public class EmojiIndexGenerator {
-    private static final String EMOJI_VERSION = "E14.0";
+    private static final String EMOJI_VERSION = "E15.0";
     private static final String EMOJI_TEST_URL = "https://www.unicode.org/Public/emoji/" + EMOJI_VERSION.substring(1) + "/emoji-test.txt";
 
     private static final FastLogger logger = new FastLogger();
