@@ -10,7 +10,7 @@ public class OpenMojiProvider extends EmojiAssets.AssetImageProvider {
             "OpenMoji",
             "openmoji",
             "https://openmoji.org",
-            13.1 // https://openmoji.org
+            14.0 // https://openmoji.org
         );
     }
 
@@ -20,8 +20,8 @@ public class OpenMojiProvider extends EmojiAssets.AssetImageProvider {
 
         return new AssetImageSet(
             this,
-            String.format("https://cdn.casterlabs.co/emoji-cdn/openmoji/png-72x/%s.png", unicodeformat),
-            String.format("https://cdn.casterlabs.co/emoji-cdn/openmoji/svg/%s.svg", unicodeformat)
+            String.format("https://github.com/hfg-gmuend/openmoji/raw/master/color/72x72/%s.png", unicodeformat),
+            String.format("https://github.com/hfg-gmuend/openmoji/raw/master/color/svg/%s.svg", unicodeformat)
         );
     }
 
