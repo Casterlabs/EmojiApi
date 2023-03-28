@@ -9,8 +9,8 @@ public class TwemojiProvider extends EmojiAssets.AssetImageProvider {
         super(
             "Twemoji",
             "twemoji",
-            "https://twemoji.twitter.com",
-            14.0 // https://github.com/twitter/twemoji#:~:text=Twemoji%20v14.0-,adheres%20to%20the,-Unicode%2014.0%20spec
+            "https://github.com/jdecked/twemoji",
+            14.0 // https://github.com/jdecked/twemoji#:~:text=Twemoji%20v14.0%20adheres%20to%20the%20Unicode%2014.0%20spec
         );
     }
 
@@ -20,8 +20,8 @@ public class TwemojiProvider extends EmojiAssets.AssetImageProvider {
 
         return new AssetImageSet(
             this,
-            String.format("https://raw.githubusercontent.com/twitter/twemoji/master/assets/72x72/%s.png", unicodeformat),
-            String.format("https://raw.githubusercontent.com/twitter/twemoji/master/assets/svg/%s.svg", unicodeformat)
+            String.format("https://raw.githubusercontent.com/jdecked/twemoji/master/assets/72x72/%s.png", unicodeformat),
+            String.format("https://raw.githubusercontent.com/jdecked/twemoji/master/assets/svg/%s.svg", unicodeformat)
         );
     }
 

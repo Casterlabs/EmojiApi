@@ -37,6 +37,7 @@ public class EmojiIndexGenerator {
      */
     @Deprecated
     public static void main(String[] args) throws IOException {
+//        logger.setCurrentLevel(LogLevel.ALL);
         validationThreadPool = Executors.newFixedThreadPool(64);
         logger.info("Building emoji index...");
         generate();
