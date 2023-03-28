@@ -25,6 +25,8 @@ public class WebUtil {
     public static boolean doesContentExist(@Nullable String url) {
         if (url == null) {
             return false;
+        } else if (url.startsWith("data:")) {
+            return true;
         }
 
         try {
