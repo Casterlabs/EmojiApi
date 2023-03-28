@@ -10,6 +10,7 @@ import org.jetbrains.annotations.Nullable;
 
 import co.casterlabs.emoji.data.Emoji.Variation;
 import co.casterlabs.emoji.data.EmojiAssets.AssetImageProvider.AssetImageSet;
+import co.casterlabs.emoji.data.impl.assets.AppleEmojiProvider;
 import co.casterlabs.emoji.data.impl.assets.NotoEmojiProvider;
 import co.casterlabs.emoji.data.impl.assets.OpenMojiProvider;
 import co.casterlabs.emoji.data.impl.assets.SensaEmojiProvider;
@@ -36,16 +37,13 @@ import lombok.ToString;
 public class EmojiAssets {
     public static final String DEFAULT_PROVIDER = "noto-emoji"; // They support the most.
 
-    /* 
-     * TODO Investigate https://decodeunicode.org/en/u+23F2
-     * TODO Render & Host & Add SegoeUI Emoji https://docs.microsoft.com/en-us/typography/font-list/segoe-ui-emoji
-     */
     public static final List<AssetImageProvider> emojiProviders = Arrays.asList(
         new NotoEmojiProvider(),
         new TwemojiProvider(),
         new OpenMojiProvider(),
         new SensaEmojiProvider(),
-        new TossFaceProvider()
+        new TossFaceProvider(),
+        new AppleEmojiProvider()
     );
 
     // --
