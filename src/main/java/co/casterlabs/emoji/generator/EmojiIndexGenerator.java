@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 import co.casterlabs.emoji.WebUtil;
 import co.casterlabs.emoji.data.Emoji;
@@ -36,11 +37,21 @@ public class EmojiIndexGenerator {
      *             case.
      */
     @Deprecated
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws Exception {
 //        logger.setCurrentLevel(LogLevel.ALL);
-        validationThreadPool = Executors.newFixedThreadPool(64);
+        validationThreadPool = Executors.newFixedThreadPool(128);
+
         logger.info("Building emoji index...");
-        generate();
+        EmojiIndex index = generate();
+
+        // Wait for validation to finish.
+        validationThreadPool.shutdown();
+        validationThreadPool.awaitTermination(Long.MAX_VALUE, TimeUnit.MILLISECONDS);
+
+        Files.write(
+            new File("src/main/resources/emoji_index.json").toPath(),
+            index.toJson().getBytes(StandardCharsets.UTF_8)
+        );
         logger.info("Built.");
     }
 
@@ -162,11 +173,7 @@ public class EmojiIndexGenerator {
             )
         );
 
-        EmojiIndex index = new EmojiIndex(EMOJI_VERSION, categories);
-
-        Files.write(new File("src/main/resources/emoji_index.json").toPath(), index.getJson().getBytes(StandardCharsets.UTF_8));
-
-        return index;
+        return new EmojiIndex(EMOJI_VERSION, categories);
     }
 
     private static String[] getEmojiDeclaration() throws IOException {

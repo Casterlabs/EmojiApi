@@ -27,14 +27,19 @@ public class WebUtil {
             return false;
         }
 
+        try {
+            Thread.sleep(50); // This delay prevents rate limitng.
+        } catch (InterruptedException e) {}
+
         Request request = new Request.Builder()
             .url(url)
+//            .method("head", null)
             .build();
 
         try (Response response = client.newCall(request).execute()) {
             return response.isSuccessful();
         } catch (IOException e) {
-            if (e.getMessage().equals("timeout")) {
+            if (e.getMessage().contains("timeout") || e.getMessage().contains("timed out")) {
                 return doesContentExist(url); // Try again.
             }
             System.err.println(url);

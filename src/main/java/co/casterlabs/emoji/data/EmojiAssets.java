@@ -135,10 +135,6 @@ public class EmojiAssets {
                 // Note that this is not called during load() since it'll get deserialized
                 // instead.
                 this.validationFuture = EmojiIndexGenerator.getValidationThreadPool().submit(() -> {
-                    try {
-                        Thread.sleep(10); // This delay prevents rate limitng.
-                    } catch (InterruptedException e) {}
-
                     boolean valid = WebUtil.doesContentExist(this.pngUrl) ||
                         WebUtil.doesContentExist(this.svgUrl);
 

@@ -26,9 +26,6 @@ import xyz.e3ndr.fastloggingframework.logging.FastLogger;
 public class EmojiIndex {
 
     @ToString.Exclude
-    private String json;
-
-    @ToString.Exclude
     private String regex;
 
     @JsonField
@@ -111,8 +108,6 @@ public class EmojiIndex {
                 }
             }
         }
-
-        this.json = Rson.DEFAULT.toJson(this).toString(true);
     }
 
     public @Nullable EmojiCategory getCategoryById(@NonNull String id) {
@@ -223,6 +218,10 @@ public class EmojiIndex {
     @Override
     public String toString() {
         return String.format("EmojiIndex(%s)", this.categories);
+    }
+
+    public String toJson() {
+        return Rson.DEFAULT.toJson(this).toString(true);
     }
 
 }
