@@ -13,6 +13,7 @@ import co.casterlabs.emoji.data.EmojiAssets.AssetImageProvider.AssetImageSet;
 import co.casterlabs.emoji.data.impl.assets.NotoEmojiProvider;
 import co.casterlabs.emoji.data.impl.assets.OpenMojiProvider;
 import co.casterlabs.emoji.data.impl.assets.SensaEmojiProvider;
+import co.casterlabs.emoji.data.impl.assets.TossFaceProvider;
 import co.casterlabs.emoji.data.impl.assets.TwemojiProvider;
 import co.casterlabs.emoji.generator.EmojiIndexGenerator;
 import co.casterlabs.emoji.generator.WebUtil;
@@ -43,7 +44,8 @@ public class EmojiAssets {
         new NotoEmojiProvider(),
         new TwemojiProvider(),
         new OpenMojiProvider(),
-        new SensaEmojiProvider()
+        new SensaEmojiProvider(),
+        new TossFaceProvider()
     );
 
     // --
