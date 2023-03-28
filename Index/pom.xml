@@ -31,7 +31,7 @@
 		</dependency>
 		<dependency>
 			<groupId>co.casterlabs.Rakurai</groupId>
-			<artifactId>IOUtil</artifactId>
+			<artifactId>Util</artifactId>
 			<version>1.17.0</version>
 			<scope>provided</scope>
 		</dependency>
