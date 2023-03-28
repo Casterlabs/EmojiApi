@@ -13,3 +13,4 @@
 # Common
 target/
 plugins/
+pom.xml.versionsBackup
