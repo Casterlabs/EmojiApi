@@ -5,7 +5,6 @@ import java.util.Map;
 
 import org.jetbrains.annotations.Nullable;
 
-import co.casterlabs.emoji.data.EmojiAssets.AssetImageProvider.AssetImageSet;
 import co.casterlabs.rakurai.json.Rson;
 import co.casterlabs.rakurai.json.annotating.JsonSerializer;
 import co.casterlabs.rakurai.json.element.JsonElement;
@@ -18,10 +17,10 @@ public class _EmojiAssetsSerializer implements JsonSerializer<EmojiAssets> {
     @Override
     public @Nullable EmojiAssets deserialize(@NonNull JsonElement value, @NonNull Class<?> type, @NonNull Rson rson) throws JsonParseException {
         JsonObject mapping = value.getAsObject();
-        Map<String, AssetImageSet> assets = new HashMap<>();
+        Map<String, EmojiAssetImageSet> assets = new HashMap<>();
 
         for (Map.Entry<String, JsonElement> entry : mapping.entrySet()) {
-            AssetImageSet set = Rson.DEFAULT.fromJson(entry.getValue(), AssetImageSet.class);
+            EmojiAssetImageSet set = Rson.DEFAULT.fromJson(entry.getValue(), EmojiAssetImageSet.class);
 
             assets.put(entry.getKey(), set);
         }

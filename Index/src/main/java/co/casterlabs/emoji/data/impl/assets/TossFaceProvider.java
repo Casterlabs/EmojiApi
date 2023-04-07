@@ -1,9 +1,10 @@
 package co.casterlabs.emoji.data.impl.assets;
 
+import co.casterlabs.emoji.data.EmojiAssetImageProvider;
+import co.casterlabs.emoji.data.EmojiAssetImageSet;
 import co.casterlabs.emoji.data.Emoji.Variation;
-import co.casterlabs.emoji.data.EmojiAssets;
 
-public class TossFaceProvider extends EmojiAssets.AssetImageProvider {
+public class TossFaceProvider extends EmojiAssetImageProvider {
 
     public TossFaceProvider() {
         super(
@@ -15,14 +16,14 @@ public class TossFaceProvider extends EmojiAssets.AssetImageProvider {
     }
 
     @Override
-    protected AssetImageSet produce0(Variation variation) {
+    protected EmojiAssetImageSet produce0(Variation variation) {
         StringBuilder unicodeformat = new StringBuilder();
 
         for (String code : variation.getCodeSequence()) {
             unicodeformat.append("_u").append(code.toUpperCase());
         }
 
-        return new AssetImageSet(
+        return new EmojiAssetImageSet(
             this,
             null,
             String.format("https://raw.githubusercontent.com/toss/tossface/main/dist/svg/%s.svg", unicodeformat.substring(1) /* drop leading _ */)

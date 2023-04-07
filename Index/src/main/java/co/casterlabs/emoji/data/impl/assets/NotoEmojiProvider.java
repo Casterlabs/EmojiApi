@@ -1,9 +1,10 @@
 package co.casterlabs.emoji.data.impl.assets;
 
+import co.casterlabs.emoji.data.EmojiAssetImageProvider;
+import co.casterlabs.emoji.data.EmojiAssetImageSet;
 import co.casterlabs.emoji.data.Emoji.Variation;
-import co.casterlabs.emoji.data.EmojiAssets;
 
-public class NotoEmojiProvider extends EmojiAssets.AssetImageProvider {
+public class NotoEmojiProvider extends EmojiAssetImageProvider {
 
     public NotoEmojiProvider() {
         super(
@@ -15,10 +16,10 @@ public class NotoEmojiProvider extends EmojiAssets.AssetImageProvider {
     }
 
     @Override
-    protected AssetImageSet produce0(Variation variation) {
+    protected EmojiAssetImageSet produce0(Variation variation) {
         String unicodeformat = String.join("_", variation.getCodeSequence()).toLowerCase();
 
-        return new AssetImageSet(
+        return new EmojiAssetImageSet(
             this,
             String.format("https://raw.githubusercontent.com/googlefonts/noto-emoji/main/png/72/emoji_u%s.png", unicodeformat),
             String.format("https://raw.githubusercontent.com/googlefonts/noto-emoji/main/svg/emoji_u%s.svg", unicodeformat)

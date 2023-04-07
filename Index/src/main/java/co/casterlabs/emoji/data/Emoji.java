@@ -155,7 +155,7 @@ public class Emoji {
                 );
             }
 
-            EmojiAssets.AssetImageProvider.AssetImageSet imageSet = this.assets.getAsset(provider);
+            EmojiAssetImageSet imageSet = this.assets.getAsset(provider);
 
             if ((imageSet != null) && imageSet.isSupported()) {
                 return String.format(

@@ -97,7 +97,7 @@ public class EmojiIndex {
             // Wait for everything to finish loading before creating json.
             FastLogger.logStatic("Waiting for additional validation to finish.");
             for (Emoji.Variation variation : this.allEmojiVariations) {
-                for (EmojiAssets.AssetImageProvider.AssetImageSet set : variation.getAssets().getAssets().values()) {
+                for (EmojiAssetImageSet set : variation.getAssets().getAssets().values()) {
                     if (set.getValidationFuture() != null) {
                         try {
                             set.getValidationFuture().get();

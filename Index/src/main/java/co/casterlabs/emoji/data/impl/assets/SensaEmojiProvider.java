@@ -3,11 +3,12 @@ package co.casterlabs.emoji.data.impl.assets;
 import java.util.HashMap;
 import java.util.Map;
 
+import co.casterlabs.emoji.data.EmojiAssetImageProvider;
+import co.casterlabs.emoji.data.EmojiAssetImageSet;
 import co.casterlabs.emoji.data.Emoji.Variation;
 import co.casterlabs.emoji.generator.WebUtil;
-import co.casterlabs.emoji.data.EmojiAssets;
 
-public class SensaEmojiProvider extends EmojiAssets.AssetImageProvider {
+public class SensaEmojiProvider extends EmojiAssetImageProvider {
     private static final Map<String, String> skinToneMapping = new HashMap<>();
 
     static {
@@ -30,7 +31,7 @@ public class SensaEmojiProvider extends EmojiAssets.AssetImageProvider {
     }
 
     @Override
-    protected AssetImageSet produce0(Variation variation) {
+    protected EmojiAssetImageSet produce0(Variation variation) {
         String sensaFormat = variation.getIdentifier();
         sensaFormat = sensaFormat.substring(0, 1).toUpperCase() + sensaFormat.substring(1); // Capitialize the first letter.
 
@@ -43,7 +44,7 @@ public class SensaEmojiProvider extends EmojiAssets.AssetImageProvider {
 
         sensaFormat = WebUtil.encodeURI(sensaFormat);
 
-        return new AssetImageSet(
+        return new EmojiAssetImageSet(
             this,
             String.format("https://cdn.casterlabs.co/emoji-cdn/sensa/png/2x/%s.png", sensaFormat),
             String.format("https://cdn.casterlabs.co/emoji-cdn/sensa/svg/%s.svg", sensaFormat)
