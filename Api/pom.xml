@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>co.casterlabs</groupId>
 		<artifactId>EmojiApi</artifactId>
-		<version>3.5.0</version>
+		<version>3.5.1</version>
 		<relativePath>../pom.xml</relativePath>
 	</parent>
 
@@ -25,21 +25,9 @@
 		</dependency>
 
 		<dependency>
-			<groupId>co.casterlabs.Rakurai</groupId>
-			<artifactId>Http-Server</artifactId>
-			<version>1.17.1</version>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>co.casterlabs.Rakurai</groupId>
-			<artifactId>Json</artifactId>
-			<version>1.17.1</version>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
 			<groupId>co.casterlabs.Sora</groupId>
-			<artifactId>Sora-Framework</artifactId>
-			<version>2.11.2</version>
+			<artifactId>Sora-Api</artifactId>
+			<version>2.12.0</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>

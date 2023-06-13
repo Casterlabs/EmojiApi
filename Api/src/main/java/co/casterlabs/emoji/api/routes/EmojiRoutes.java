@@ -4,8 +4,8 @@ import java.net.URLDecoder;
 
 import co.casterlabs.emoji.data.Emoji;
 import co.casterlabs.emoji.data.EmojiIndex;
-import co.casterlabs.rakurai.io.http.HttpResponse;
 import co.casterlabs.rakurai.io.http.StandardHttpStatus;
+import co.casterlabs.rakurai.io.http.server.HttpResponse;
 import co.casterlabs.rakurai.json.Rson;
 import co.casterlabs.sora.api.http.HttpProvider;
 import co.casterlabs.sora.api.http.SoraHttpSession;
