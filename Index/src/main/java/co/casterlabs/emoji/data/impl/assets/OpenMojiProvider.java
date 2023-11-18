@@ -1,8 +1,8 @@
 package co.casterlabs.emoji.data.impl.assets;
 
+import co.casterlabs.emoji.data.Emoji.Variation;
 import co.casterlabs.emoji.data.EmojiAssetImageProvider;
 import co.casterlabs.emoji.data.EmojiAssetImageSet;
-import co.casterlabs.emoji.data.Emoji.Variation;
 
 public class OpenMojiProvider extends EmojiAssetImageProvider {
 
@@ -21,8 +21,8 @@ public class OpenMojiProvider extends EmojiAssetImageProvider {
 
         return new EmojiAssetImageSet(
             this,
-            String.format("https://github.com/hfg-gmuend/openmoji/raw/master/color/72x72/%s.png", unicodeformat),
-            String.format("https://github.com/hfg-gmuend/openmoji/raw/master/color/svg/%s.svg", unicodeformat)
+            String.format("https://github.com/hfg-gmuend/openmoji/raw/14.0.0/color/72x72/%s.png", unicodeformat),
+            String.format("https://github.com/hfg-gmuend/openmoji/raw/14.0.0/color/svg/%s.svg", unicodeformat)
         );
     }
 
