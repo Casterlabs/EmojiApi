@@ -4,20 +4,20 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import co.casterlabs.commons.functional.tuples.Pair;
 import co.casterlabs.emoji.data.Emoji;
 import co.casterlabs.emoji.data.EmojiAssets;
 import co.casterlabs.emoji.data.EmojiIndex;
-import co.casterlabs.rakurai.io.http.HttpMethod;
-import co.casterlabs.rakurai.io.http.StandardHttpStatus;
-import co.casterlabs.rakurai.io.http.server.HttpResponse;
 import co.casterlabs.rakurai.json.Rson;
 import co.casterlabs.rakurai.json.annotating.JsonClass;
 import co.casterlabs.rakurai.json.serialization.JsonParseException;
 import co.casterlabs.rakurai.json.validation.JsonValidate;
+import co.casterlabs.rhs.protocol.HttpMethod;
+import co.casterlabs.rhs.protocol.StandardHttpStatus;
+import co.casterlabs.rhs.server.HttpResponse;
 import co.casterlabs.sora.api.http.HttpProvider;
 import co.casterlabs.sora.api.http.SoraHttpSession;
 import co.casterlabs.sora.api.http.annotations.HttpEndpoint;
-import kotlin.Pair;
 import lombok.AllArgsConstructor;
 import xyz.e3ndr.fastloggingframework.logging.FastLogger;
 
@@ -43,7 +43,7 @@ public class EmojiDetectionRoute implements HttpProvider {
                     List<Emoji.Variation> variations = new ArrayList<>(detected.size());
 
                     for (Pair<Emoji, Emoji.Variation> pair : detected) {
-                        variations.add(pair.getSecond());
+                        variations.add(pair.b());
                     }
 
                     return HttpResponse.newFixedLengthResponse(StandardHttpStatus.OK, Rson.DEFAULT.toJson(variations));

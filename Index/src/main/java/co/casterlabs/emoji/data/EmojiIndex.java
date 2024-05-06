@@ -12,11 +12,11 @@ import java.util.regex.Pattern;
 
 import org.jetbrains.annotations.Nullable;
 
+import co.casterlabs.commons.functional.tuples.Pair;
 import co.casterlabs.emoji.generator.WebUtil;
 import co.casterlabs.rakurai.json.Rson;
 import co.casterlabs.rakurai.json.annotating.JsonField;
 import co.casterlabs.rakurai.json.validation.JsonValidate;
-import kotlin.Pair;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.ToString;
@@ -185,8 +185,7 @@ public class EmojiIndex {
             if (detection == null) { // Not an emoji.
                 result[idx] = part;
             } else {
-                Emoji.Variation variation = detection.getSecond();
-
+                Emoji.Variation variation = detection.b();
                 result[idx] = variation;
             }
         }

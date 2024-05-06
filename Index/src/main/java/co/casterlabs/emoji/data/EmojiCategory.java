@@ -9,10 +9,10 @@ import java.util.Map;
 
 import org.jetbrains.annotations.Nullable;
 
+import co.casterlabs.commons.functional.tuples.Pair;
 import co.casterlabs.rakurai.json.annotating.JsonClass;
 import co.casterlabs.rakurai.json.annotating.JsonExclude;
 import co.casterlabs.rakurai.json.validation.JsonValidate;
-import kotlin.Pair;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

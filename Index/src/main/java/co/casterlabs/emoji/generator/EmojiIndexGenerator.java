@@ -13,10 +13,10 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
+import co.casterlabs.commons.io.streams.StreamUtil;
 import co.casterlabs.emoji.data.Emoji;
 import co.casterlabs.emoji.data.EmojiCategory;
 import co.casterlabs.emoji.data.EmojiIndex;
-import co.casterlabs.rakurai.io.IOUtil;
 import co.casterlabs.rakurai.json.Rson;
 import lombok.Getter;
 import okhttp3.Request;
@@ -61,7 +61,7 @@ public class EmojiIndexGenerator {
         logger.info("Loading emoji index...");
 
         try (InputStream in = EmojiIndexGenerator.class.getClassLoader().getResourceAsStream("emoji_index.json")) {
-            String contents = IOUtil.readInputStreamString(in, StandardCharsets.UTF_8);
+            String contents = StreamUtil.toString(in, StandardCharsets.UTF_8);
 
             return Rson.DEFAULT.fromJson(contents, EmojiIndex.class);
         } finally {
